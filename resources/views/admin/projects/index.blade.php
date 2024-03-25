@@ -26,6 +26,7 @@
                 <th scope="col">#</th>
                 <th scope="col">Titolo</th>
                 <th scope="col">Slug</th>
+                <th scope="col">Tipologia</th>
                 <th scope="col">Completato</th>
                 <th scope="col">Data creazione</th>
                 <th scope="col">Ultima modifica</th>
@@ -45,9 +46,21 @@
         <tbody>
             @forelse ($projects as $project)
                 <tr>
+                    {{-- ID --}}
                     <th scope="row">{{ $project->id }}</th>
+
+                    {{-- Titolo --}}
                     <td>{{ $project->title }}</td>
+
+                    {{-- Slug --}}
                     <td>{{ $project->slug }}</td>
+
+                    {{-- Tipologia --}}
+                    <td><span class="badge text-black "
+                            @if ($project->type) style="background-color: {{ $project->type->color }}" @endif>{{ $project->type ? $project->type->label : '-' }}</span>
+                    </td>
+
+                    {{-- Stato --}}
                     <td>
                         <div class="form-check form-switch">
                             <form action="{{ route('admin.projects.toggle-status', $project->id) }}" method="POST"
@@ -61,10 +74,15 @@
                                     for="toggle-status-btn-{{ $project->id }}">{{ $project->is_completed ? 'Completato' : 'In corso' }}</label>
                             </form>
                         </div>
-
                     </td>
+
+                    {{-- Data creazione --}}
                     <td>{{ $project->getFormattedDate($project->created_at) }}</td>
+
+                    {{-- Data ultima modifica --}}
                     <td>{{ $project->getFormattedDate($project->updated_at) }}</td>
+
+                    {{-- Pulsanti --}}
                     <td>
                         <div class="d-flex justify-content-end gap-2 ">
                             <a href="{{ route('admin.projects.show', $project->id) }}" class="btn btn-sm btn-primary">
@@ -87,7 +105,7 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="7">
+                    <td colspan="8">
                         <h3>Non ci sono progetti al momento</h3>
                     </td>
                 </tr>

@@ -9,6 +9,7 @@
 
 @csrf
 
+{{-- Titolo --}}
 <div class="col-md-6">
     <label for="title" class="form-label">Titolo</label>
     <input type="text" name="title"
@@ -22,11 +23,15 @@
         <div class="form-text">Inserisci un titolo compreso tra 10 e 40 caratteri</div>
     @enderror
 </div>
+
+{{-- Slug --}}
 <div class="col-md-6">
     <label for="slug" class="form-label">Slug</label>
     <input type="text" class="form-control" id="slug" value="{{ Str::slug(old('title', $project->slug)) }}"
         disabled>
 </div>
+
+{{-- Descrizione --}}
 <div class="col-12">
     <label for="description" class="form-label">Descrizione</label>
     <textarea name="description"
@@ -40,9 +45,28 @@
         <div class="form-text">Inserisci una descrizione</div>
     @enderror
 </div>
-<div class="col-11 d-flex flex-column justify-content-center">
-    <label for="image" class="form-label">Immagine</label>
 
+{{-- Tipologia --}}
+<div class="col-4">
+    <label for="type_id" class="form-label">Scegli una tipologia</label>
+    <select class="form-select @error('type_id') is-invalid @elseif(old('type_id', '')) is-valid @enderror"
+        id="type_id" name="type_id">
+        <option value="">Nessuna</option>
+        @foreach ($types as $type)
+            <option value="{{ $type->id }}" @if (old('type_id', $project->type?->id) == $type->id) selected @endif>{{ $type->label }}
+            </option>
+        @endforeach
+    </select>
+    @error('type_id')
+        <div class="invalid-feedback">
+            {{ $message }}
+        </div>
+    @enderror
+</div>
+
+{{-- Immagine --}}
+<div class="col-7 d-flex flex-column justify-content-center">
+    <label for="image" class="form-label">Immagine</label>
     {{-- Fake input file --}}
     <div @class(['input-group', 'd-none' => !$project->image]) id="fake-image-field">
         <button class="btn btn-outline-secondary text-white" type="button" id="change-image-btn">Scegli il
@@ -61,6 +85,7 @@
         <div class="form-text">Carica un file immagine</div>
     @enderror
 </div>
+{{-- Anteprima immagine --}}
 <div class="col-1  d-flex justify-content-center align-items-center">
     <figure class="mb-0" id="preview-container">
         <img src="{{ old('image', $project->image)
@@ -69,6 +94,8 @@
             alt="{{ old('title', '') }}" class="img-fluid" id="preview">
     </figure>
 </div>
+
+{{-- Stato progetto --}}
 <div class="col-12 form-check d-flex justify-content-end gap-3">
     <input class="form-check-input" name="is_completed" type="checkbox" value="1" id="is_completed"
         @if (old('is_completed', $project->is_completed)) checked @endif>
@@ -81,6 +108,8 @@
         </div>
     @enderror
 </div>
+
+{{-- Pulsanti form --}}
 <div class="col-12 d-flex justify-content-end gap-3">
     <button class="btn btn-sm btn-warning" type="reset">
         <i class="fa-solid fa-eraser"></i>

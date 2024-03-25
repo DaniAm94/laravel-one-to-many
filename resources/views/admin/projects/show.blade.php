@@ -4,12 +4,22 @@
 
 @section('content')
     <header>
-        <h1 class="text-center my-3 ">{{ $project->title }}</h1>
+        {{-- Titolo --}}
+        <h1 class="my-3 ">{{ $project->title }}</h1>
+        {{-- Tipologia --}}
+        <p>Tipologia: @if ($project->type)
+                <span class="badge ms-2"
+                    style="background-color: {{ $project->type->color }}">{{ $project->type->label }}</span>
+            @else
+                Nessuna
+            @endif
+        </p>
     </header>
     <hr>
     <div class="clearfix">
         @if ($project->image)
-            <img src="{{ $project->printImage() }}" alt="{{ $project->title }}" class="me-3 float-start img-fluid ">
+            <img style="width: 250px" src="{{ $project->printImage() }}" alt="{{ $project->title }}"
+                class="me-3 float-start img-fluid ">
         @endif
         <p>{{ $project->description }}</p>
         <div>
