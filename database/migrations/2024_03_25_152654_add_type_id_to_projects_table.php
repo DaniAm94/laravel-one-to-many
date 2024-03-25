@@ -24,6 +24,7 @@ return new class extends Migration
     {
         Schema::table('projects', function (Blueprint $table) {
             $table->dropForeignIdFor(Type::class);
+            $table->dropColumn('type_id');
         });
     }
 };
