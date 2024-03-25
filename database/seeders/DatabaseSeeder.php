@@ -18,6 +18,8 @@ class DatabaseSeeder extends Seeder
             'name' => 'Danilo',
             'email' => 'danilo@example.com',
         ]);
+        $this->call(TypeSeeder::class);
+        //\App\Models\Type::factory(10)->create();
         \App\Models\Project::factory(10)->create();
     }
 }
