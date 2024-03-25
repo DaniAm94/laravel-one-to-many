@@ -5,7 +5,11 @@
 @section('content')
     <div class="card my-5">
         <div class="card-header d-flex justify-content-between align-items-center ">
-            {{ $project->title }}
+            @if ($project->type)
+                <span class="badge" style="background-color: {{ $project->type->color }};">{{ $project->type->label }}</span>
+            @else
+                <span class="badge text-bg-secondary ">Nessuna categoria</span>
+            @endif
             <a href="{{ route('guest.home') }}" class="btn btn-sm btn-primary ">Torna alla lista</a>
         </div>
         <div class="card-body">

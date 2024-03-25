@@ -18,7 +18,12 @@
 
                 <div class="card my-5">
                     <div class="card-header d-flex justify-content-between align-items-center ">
-                        {{ $project->title }}
+                        @if ($project->type)
+                            <span class="badge"
+                                style="background-color: {{ $project->type->color }};">{{ $project->type->label }}</span>
+                        @else
+                            <span class="badge text-bg-secondary ">Nessuna categoria</span>
+                        @endif
                         <a href="{{ route('guest.projects.show', $project->slug) }}" class="btn btn-sm btn-primary ">Vedi</a>
                     </div>
                     <div class="card-body">
@@ -29,11 +34,11 @@
                                 </div>
                             @endif
                             <div class="col">
-                                <h5 class="card-title mb-4 ">{{ $project->title }}</h5>
-                                <h6 class="card-subtitle mb-2 text-body-secondary">
+                                <h5 class="card-title mb-2 text-break">{{ $project->title }}</h5>
+                                <small class="card-subtitle text-body-secondary">
                                     {{ $project->getFormattedDate('created_at') }}
-                                </h6>
-                                <p class="card-text">{{ $project->getAbstract(70) }}</p>
+                                </small>
+                                <p class="card-text mt-2">{{ $project->getAbstract(70) }}</p>
                             </div>
                         </div>
                     </div>
