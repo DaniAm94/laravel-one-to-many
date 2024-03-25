@@ -11,7 +11,7 @@ class Project extends Model
 {
     use HasFactory;
     use SoftDeletes;
-    protected $fillable = ['title', 'description', 'slug', 'is_completed'];
+    protected $fillable = ['title', 'description', 'slug', 'is_completed', 'type_id'];
 
     public function getFormattedDate($column, $format = 'd-m-Y')
     {
@@ -28,6 +28,6 @@ class Project extends Model
 
     public function type()
     {
-        $this->belongsTo(Type::class);
+        return $this->belongsTo(Type::class);
     }
 }
